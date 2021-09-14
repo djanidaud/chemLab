@@ -1,0 +1,40 @@
+@font-face {
+    font-family: 'Proxima Soft';
+    src: local('Proxima Soft Medium'), local('Proxima-Soft-Medium'),
+        url('Medium/ProximaSoft-Medium.woff2') format('woff2'),
+        url('Medium/ProximaSoft-Medium.woff') format('woff'),
+        url('Medium/ProximaSoft-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: local('Proxima Soft Regular'), local('Proxima-Soft-Regular'),
+    url('Regular/ProximaSoft-Regular.woff2') format('woff2'),
+    url('Regular/ProximaSoft-Regular.woff') format('woff'),
+    url('Regular/ProximaSoft-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: local('Proxima Soft Light'), local('Proxima-Soft-Light'),
+    url('Light/ProximaSoft-Light.woff2') format('woff2'),
+    url('Light/ProximaSoft-Light.woff') format('woff'),
+    url('Light/ProximaSoft-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Proxima Soft';
+    src: local('Proxima Soft Thin'), local('Proxima-Soft-Thin'),
+    url('Thin/ProximaSoft-Thin.woff2') format('woff2'),
+    url('Thin/ProximaSoft-Thin.woff') format('woff'),
+    url('Thin/ProximaSoft-Thin.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
