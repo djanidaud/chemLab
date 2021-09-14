@@ -46,18 +46,8 @@ function Element({
       ])}
       onClick={() => (disabled ? null : onClick(molecule))}
     >
-      {/*<svg viewBox="0 0 60 60" className="atomicNumber">*/}
-      {/*  <text x="7%" y="15%">*/}
-      {/*    {atomicNumber}*/}
-      {/*  </text>*/}
-      {/*</svg>*/}
-      {/*<svg viewBox="0 0 30 30" className="symbol" style={{ padding: "20%" }}>*/}
-      {/*  <text x="50%" y="50%">*/}
-      {/*    {symbol}*/}
-      {/*  </text>*/}
-      {/*</svg>*/}
-      <div>{atomicNumber}</div>
-      <div>{symbol}</div>
+      <div className="atomicNumber">{atomicNumber}</div>
+      <div className="symbol">{symbol}</div>
     </div>
   );
 }

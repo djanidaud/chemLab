@@ -26,16 +26,6 @@ const styles = ({ theme, width, height, coverMargin }) => css`
     z-index: -1;
   }
 
-  // .cover-shadow {
-  //   position: absolute;
-  //   left: 15px;
-  //   top: 15px;
-  //   width: calc(100% - 30px);
-  //   height: calc(100% - 30px);
-  //   box-shadow: ${theme.elevation.shadow5(0.7)};
-  //   z-index: -2;
-  // }
-
   &::before {
     content: "";
     display: inline-block;
