@@ -19,6 +19,19 @@ const styles = ({ theme }) => css`
     display: grid;
     grid-template-columns: 0.4fr repeat(18, 1fr);
     gap: 4px;
+
+    & > div:nth-child(1) {
+      grid-column: 2;
+    }
+
+    & > div:nth-child(2) {
+      grid-column: 19;
+    }
+
+    & > div:nth-child(6),
+    & > div:nth-child(15) {
+      grid-column: 14;
+    }
   }
 
   .extraElements {

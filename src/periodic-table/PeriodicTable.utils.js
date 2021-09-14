@@ -1,7 +1,6 @@
 export const ELEMENT = "element";
-export const EMPTY = "empty-element";
-export const TOP_LABEL = "top-label";
-export const SIDE_LABEL = "side_label";
+export const TOP_LABEL = "topLabel";
+export const SIDE_LABEL = "sideLabel";
 
 export const TableElements = [
   {
@@ -2722,79 +2721,11 @@ export const TableElements = [
 
 export const TableLayout = [
   {
-    type: EMPTY,
-    value: 1,
-  },
-  {
     type: TOP_LABEL,
     value: {
       number: "1",
       group: "IA",
     },
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
   },
   {
     type: TOP_LABEL,
@@ -2811,46 +2742,6 @@ export const TableLayout = [
   {
     type: TOP_LABEL,
     value: { number: "2", group: "IIA" },
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
   },
   {
     type: TOP_LABEL,
@@ -2887,46 +2778,6 @@ export const TableLayout = [
   {
     type: ELEMENT,
     value: 3,
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
-  },
-  {
-    type: EMPTY,
-    value: "",
   },
   {
     type: ELEMENT,

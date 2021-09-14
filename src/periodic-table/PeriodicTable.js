@@ -19,43 +19,32 @@ function PeriodicTable({
   currentReaction,
   possibleReactionActors,
 }) {
-  const layoutMapper = ({ type, value }, index) => {
-    switch (type) {
-      case ELEMENT:
-        const element = TableElements[value];
-        return renderElement(
-          "element-" + value,
-          applyCorrectNumberOfAtoms(element.symbol),
-          element
-        );
-      case TOP_LABEL:
-        return <TopLabel {...value} key={"topLabel-" + index} />;
-      case SIDE_LABEL:
-        return <SideLabel value={value} key={"sideLabel-" + index} />;
-      default:
-        return <div key={"empty-" + index} />;
-    }
-  };
+  const layoutMapper = ({ type, value }, index) =>
+    ({
+      [TOP_LABEL]: () => <TopLabel {...value} key={type + index} />,
+      [SIDE_LABEL]: () => <SideLabel value={value} key={type + index} />,
+      [ELEMENT]: () => renderElement(value),
+    }[type]());
 
   const renderExtraElements = (elementId) =>
-    Array.from(Array(14).keys()).map((i) => {
-      const element = TableElements[elementId + i];
+    Array.from(Array(14).keys()).map((i) => renderElement(elementId + i));
 
-      return renderElement("element-" + elementId + i, element.symbol, element);
-    });
-
-  const renderElement = (key, molecule, props) => (
-    <Element
-      key={key}
-      molecule={molecule}
-      active={currentReaction.includes(molecule)}
-      disabled={
-        currentReaction.length !== 0 && !possibleReactionActors.has(molecule)
-      }
-      onClick={onElementClick}
-      {...props}
-    />
-  );
+  const renderElement = (id) => {
+    const props = TableElements[id];
+    const molecule = applyCorrectNumberOfAtoms(props.symbol);
+    return (
+      <Element
+        key={"element-" + id}
+        molecule={molecule}
+        active={currentReaction.includes(molecule)}
+        disabled={
+          currentReaction.length !== 0 && !possibleReactionActors.has(molecule)
+        }
+        onClick={onElementClick}
+        {...props}
+      />
+    );
+  };
 
   return (
     <div className={className}>
