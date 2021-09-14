@@ -20,6 +20,8 @@ const styles = ({ theme }) => {
     color: ${theme.textColor.white};
     box-shadow: ${theme.elevation.shadow3(0.5)};
     position: relative;
+    text-shadow: ${theme.elevation.shadow1()};
+    font-weight: 500;
 
     .atomicNumber,
     .symbol {
@@ -32,8 +34,10 @@ const styles = ({ theme }) => {
     }
 
     .atomicNumber {
-      padding: 5%;
+      padding-top: 7%;
+      padding-left: 7%;
       font-size: 0.8vw;
+      color: #eeeeee;
     }
 
     .symbol {
@@ -41,8 +45,6 @@ const styles = ({ theme }) => {
       justify-content: center;
       align-items: center;
       font-size: min(1.3vw, 25px);
-      font-weight: 500;
-      text-shadow: ${theme.elevation.shadow1()};
     }
 
     &.disabled {
