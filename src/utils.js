@@ -44,3 +44,5 @@ export const getActors = (currentReaction) =>
     ),
     ...currentReaction,
   ]);
+
+export const range = (length) => Array.from(Array(length).keys());

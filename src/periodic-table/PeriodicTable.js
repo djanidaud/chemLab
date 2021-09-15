@@ -11,7 +11,7 @@ import {
 import Element from "./element/Element";
 import TopLabel from "./top-label/TopLabel";
 import SideLabel from "./side-label/SideLabel";
-import { applyCorrectNumberOfAtoms } from "../utils";
+import { applyCorrectNumberOfAtoms, range } from "../utils";
 
 function PeriodicTable({
   className,
@@ -27,7 +27,9 @@ function PeriodicTable({
     }[type]());
 
   const renderExtraElements = (elementId) =>
-    Array.from(Array(14).keys()).map((i) => renderElement(elementId + i));
+    range(14)
+      .map((i) => i + elementId)
+      .map(renderElement);
 
   const renderElement = (id) => {
     const props = TableElements[id];
