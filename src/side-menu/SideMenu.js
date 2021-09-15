@@ -5,7 +5,6 @@ import Spellbook from "../spellbook/Spellbook";
 import { reactions } from "../reactions";
 import useCallbackDebounced from "../hooks/useCallbackDebounced";
 import StorageArea from "../storage-area/StorageArea";
-import CraftingArea from "../crafting-area/CraftingArea";
 
 function SideMenu({
   className,
@@ -15,10 +14,26 @@ function SideMenu({
   possibleReactionActors,
 }) {
   const [bookState, setBookState] = useState({
-    arr: reactions,
+    bookReactions: reactions,
     searching: false,
     timeout: null,
   });
+
+  const querySpellbook = (reactions) => {
+    if (bookState.timeout) clearTimeout(bookState.timeout);
+    setBookState({
+      ...bookState,
+      searching: true,
+      timeout: setTimeout(
+        () =>
+          setBookState({
+            bookReactions: reactions,
+            searching: false,
+          }),
+        500
+      ),
+    });
+  };
 
   const matchesFormula = (arr, subArr) => {
     const upper = arr.map((a) => a.toUpperCase());
@@ -28,34 +43,18 @@ function SideMenu({
     });
   };
 
-  const filterCondition =
-    (matched) =>
-    ({ products, reacts }) =>
-      matchesFormula(reacts, matched[0]) &&
-      (matched.length === 1 || matchesFormula(products, matched[1]));
-
-  const querySpellbook = (reactions) => {
-    if (bookState.timeout) clearTimeout(bookState.timeout);
-    setBookState({
-      ...bookState,
-      searching: true,
-      timeout: setTimeout(() => {
-        setBookState({
-          arr: reactions,
-          searching: false,
-        });
-      }, 500),
-    });
-  };
+  const filerReactions = (query) =>
+    reactions.filter(
+      ({ products, reacts }) =>
+        matchesFormula(reacts, query[0]) &&
+        (query.length === 1 || matchesFormula(products, query[1]))
+    );
 
   const onChange = useCallbackDebounced(
     (data) => {
       const trimmed = data.target.value.trim();
       const matched = trimmed.split("=").map((e) => e.split("+"));
-
-      querySpellbook(
-        trimmed === "" ? reactions : reactions.filter(filterCondition(matched))
-      );
+      querySpellbook(trimmed === "" ? reactions : filerReactions(matched));
     },
     [],
     400
@@ -66,7 +65,7 @@ function SideMenu({
       querySpellbook(
         currentReaction.length === 0
           ? reactions
-          : reactions.filter(filterCondition([currentReaction]))
+          : filerReactions([currentReaction])
       ),
     [currentReaction]
   );
@@ -85,7 +84,7 @@ function SideMenu({
             coverMargin={20}
             width={300}
             height={205}
-            reactions={bookState.arr}
+            reactions={bookState.bookReactions}
             searching={bookState.searching}
           />
           <div className="spellbook-filter">
