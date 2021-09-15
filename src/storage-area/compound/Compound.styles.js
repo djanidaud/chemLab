@@ -14,7 +14,7 @@ const styles = ({ theme }) => css`
   position: relative;
   text-shadow: ${theme.elevation.shadow1(1)};
   opacity: 0;
-  animation: new-item-animation 0.8s linear forwards;
+  animation: new-item-animation 0.5s ease-in forwards;
   box-shadow: ${theme.elevation.shadow2(0.3)};
   display: flex;
   align-items: center;

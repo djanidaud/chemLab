@@ -73,11 +73,11 @@ function SideMenu({
 
   return (
     <div className={className}>
-      <img src="/images/dd.svg" alt="" className="curve" />
+      <img src="/images/vertical-curve.svg" alt="" className="vertical-curve" />
       <img
-        src="/images/landscape-curve.svg"
+        src="/images/horizontal-curve.svg"
         alt=""
-        className="landscape-curve"
+        className="horizontal-curve"
       />
       <div className="area">
         <div className="panel">
