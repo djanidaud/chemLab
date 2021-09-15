@@ -44,6 +44,22 @@ const styles = ({ theme, pageNumber }) => css`
         border-bottom: 1px solid transparent;
       }
     }
+
+    .page-front::after {
+      content: "";
+    }
+  }
+
+  &.active:not(.flipped):hover {
+    transform: rotateY(-20deg);
+  }
+
+  &.active.flipped:hover {
+    transform: rotateY(-160deg);
+  }
+
+  &.disabled {
+    pointer-events: none;
   }
 
   .page-front,
@@ -83,7 +99,7 @@ const styles = ({ theme, pageNumber }) => css`
 
   .reaction:nth-child(1):not(:only-child) {
     width: auto;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     border-bottom: 1px solid rgba(90, 90, 90, 0.25);
   }
 
@@ -93,7 +109,7 @@ const styles = ({ theme, pageNumber }) => css`
     display: inline-block;
     text-align: center;
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
     font-size: 10px;
     font-family: "Times New Roman", sans-serif;
   }
@@ -104,18 +120,6 @@ const styles = ({ theme, pageNumber }) => css`
 
   .page-back::after {
     content: "${(pageNumber + 1) * 2}";
-  }
-
-  &.flipped .page-front::after {
-    content: "";
-  }
-
-  &.active:not(.flipped):hover {
-    transform: rotateY(-20deg);
-  }
-
-  &.active.flipped:hover {
-    transform: rotateY(-160deg);
   }
 
   ${animate(pageNumber % 7)};
