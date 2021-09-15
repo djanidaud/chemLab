@@ -30,6 +30,7 @@ const styles = ({ theme }) => css`
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
       height: 250px;
       width: 250px;
       background-color: ${theme.elementsColor.alkali.default};
@@ -39,7 +40,8 @@ const styles = ({ theme }) => css`
     }
 
     .spellbook-filter {
-      margin-top: 20px;
+      margin-top: auto;
+      margin-bottom: 15px;
       box-shadow: ${theme.elevation.shadow3(0.4)};
       position: relative;
 

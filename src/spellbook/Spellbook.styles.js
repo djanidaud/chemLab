@@ -1,17 +1,16 @@
 import { css } from "styled-components";
-import {
-  spellBookWidth,
-  spellBookHeight,
-  coverMargin,
-} from "./Spellbook.utils";
+import { spellBookWidth, spellBookHeight } from "./Spellbook.utils";
 
 const styles = ({ theme }) => css`
   width: ${spellBookWidth + "px"};
   height: ${spellBookHeight + "px"};
   transform-style: preserve-3d;
+  box-sizing: border-box;
   perspective: 2000px;
-  position: relative;
+  position: absolute;
+  bottom: 62px;
   user-select: none;
+
   border-radius: 0.5em;
   background-color: rgb(90, 40, 120);
   box-shadow: ${theme.elevation.shadow4(0.6)};
@@ -21,15 +20,6 @@ const styles = ({ theme }) => css`
     rgba(55, 30, 70, 1) 50%,
     rgba(90, 40, 120, 1) 100%
   );
-
-  .book-cover {
-    position: absolute;
-    object-fit: cover;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-  }
 
   &::before {
     content: "";
@@ -44,12 +34,6 @@ const styles = ({ theme }) => css`
     border-radius: 0 0 3px 3px;
   }
 
-  .page {
-    margin-top: ${coverMargin / 2 + "px"};
-    margin-left: 50%;
-    height: calc(100% - ${coverMargin + "px"});
-  }
-
   &.searching {
     .page {
       animation-duration: 0.5s;
@@ -61,17 +45,11 @@ const styles = ({ theme }) => css`
 
   &.searching,
   &.hidden {
-    .page {
+    * {
       color: transparent;
-
-      .plus,
-      .arrow-down {
-        color: transparent;
-      }
-
-      .reaction {
-        border-bottom: 1px solid transparent;
-      }
+    }
+    .reaction:nth-child(1):not(:only-child) {
+      border-bottom: 1px solid transparent !important;
     }
   }
 `;

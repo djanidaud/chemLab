@@ -31,17 +31,16 @@ function Spellbook({ className, reactions, searching }) {
   );
 
   const displayPage = (page) =>
-    range(2).map((index) => {
-      if (page * 2 + index >= reactions.length) return "";
-      const { reacts, products } = reactions[page * 2 + index];
-      return (
-        <div className="reaction" key={`reaction-${page}-${index}`}>
-          {prettyReaction(reacts)}
+    range(2)
+      .map((i) => page * 2 + i)
+      .filter((pageNumber) => pageNumber < reactions.length)
+      .map((pageNumber) => (
+        <div className="reaction" key={`reaction-${page}-${pageNumber}`}>
+          {prettyReaction(reactions[pageNumber].reacts)}
           <div className="arrow-down">↓</div>
-          {prettyReaction(products)}
+          {prettyReaction(reactions[pageNumber].products)}
         </div>
-      );
-    });
+      ));
 
   const createPage = (index) => {
     const flipped = currentPage > index;
@@ -52,13 +51,10 @@ function Spellbook({ className, reactions, searching }) {
       <Page
         pageNumber={index}
         key={"page-" + index}
-        className={classNames([
-          "page",
-          {
-            flipped,
-            active,
-          },
-        ])}
+        className={classNames("page", {
+          flipped,
+          active,
+        })}
         onClick={() =>
           setCurrentPage((currentPage) => currentPage + (flipped ? -1 : 1))
         }
