@@ -81,9 +81,6 @@ function SideMenu({
       <div className="area">
         <div className="panel">
           <Spellbook
-            coverMargin={20}
-            width={300}
-            height={205}
             reactions={bookState.bookReactions}
             searching={bookState.searching}
           />

@@ -2,18 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./Spellbook.styles";
 import { styled } from "../styled";
 import classNames from "classnames";
-import { prettyReaction } from "../utils";
+import { prettyReaction, range } from "../utils";
 import Page from "./page/Page";
 import { reactions as defaultReactions } from "../reactions";
+import { maxPages } from "./Spellbook.utils";
 
-function Spellbook({
-  className,
-  width,
-  coverMargin,
-  maxPages = 5,
-  reactions,
-  searching,
-}) {
+function Spellbook({ className, reactions, searching }) {
   const hidden = reactions.length === 0;
   reactions = searching || hidden ? defaultReactions : reactions;
   const allPages = Math.ceil(reactions.length / 4);
@@ -26,22 +20,18 @@ function Spellbook({
     [initPage, allPages, reactions]
   );
 
-  useEffect(() => {
-    setPages(() =>
-      Array(allPages)
-        .fill(0)
-        .reduce(
-          (acc, _, index) =>
-            index > currentPage + maxPages || index < currentPage - maxPages
-              ? acc
-              : [...acc, createPage(index)],
-          []
-        )
-    );
-  }, [currentPage]);
+  useEffect(
+    () =>
+      setPages(() =>
+        range(allPages)
+          .filter((index) => Math.abs(currentPage - index) <= maxPages)
+          .map(createPage)
+      ),
+    [currentPage]
+  );
 
   const displayPage = (page) =>
-    [0, 1].map((index) => {
+    range(2).map((index) => {
       if (page * 2 + index >= reactions.length) return "";
       const { reacts, products } = reactions[page * 2 + index];
       return (
@@ -69,11 +59,6 @@ function Spellbook({
             active,
           },
         ])}
-        style={{
-          width:
-            (width - coverMargin) / 2 -
-            (flipped ? index % maxPages : maxPages - (index % maxPages)),
-        }}
         onClick={() =>
           setCurrentPage((currentPage) => currentPage + (flipped ? -1 : 1))
         }
@@ -85,7 +70,6 @@ function Spellbook({
 
   return (
     <div className={classNames([className, { searching, hidden }])}>
-      {/*<img src="/images/ttt.png" alt="" className="book-cover" />*/}
       {pages}
     </div>
   );

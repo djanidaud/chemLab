@@ -1,5 +1,7 @@
 import { css } from "styled-components";
 
+const maxPages = 5;
+const coverMargin = 20;
 const styles = ({ theme, pageNumber }) => css`
   font-family: ${theme.fontFamily.spellbook};
   transform-style: preserve-3d;
@@ -23,6 +25,10 @@ const styles = ({ theme, pageNumber }) => css`
   );
 
   font-weight: 100;
+  
+  width: calc((100% - ${coverMargin}px)/2 - ${
+  maxPages - (pageNumber % maxPages)
+}px);
   
   .page-front::after,
   .page-back::after {
@@ -71,6 +77,7 @@ const styles = ({ theme, pageNumber }) => css`
     z-index: ${pageNumber + 1};
     animation: stopClick;
     animation-duration: 1s;
+    width: calc((100% - ${coverMargin}px)/2 - ${pageNumber % maxPages}px);
 
     &:not(.active) {
       color: transparent;

@@ -1,8 +1,13 @@
 import { css } from "styled-components";
+import {
+  spellBookWidth,
+  spellBookHeight,
+  coverMargin,
+} from "./Spellbook.utils";
 
-const styles = ({ theme, width, height, coverMargin }) => css`
-  width: ${width + "px"};
-  height: ${height + "px"};
+const styles = ({ theme }) => css`
+  width: ${spellBookWidth + "px"};
+  height: ${spellBookHeight + "px"};
   transform-style: preserve-3d;
   perspective: 2000px;
   position: relative;
@@ -41,7 +46,7 @@ const styles = ({ theme, width, height, coverMargin }) => css`
 
   .page {
     margin-top: ${coverMargin / 2 + "px"};
-    margin-left: ${width / 2 + "px"};
+    margin-left: 50%;
     height: calc(100% - ${coverMargin + "px"});
   }
 
