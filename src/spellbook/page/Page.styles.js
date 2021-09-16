@@ -50,6 +50,11 @@ const styles = ({ theme, pageNumber }) => css`
     }
   }
 
+  // Patches an issue in Safari
+  &.active:not(.flipped) {
+    transform: rotateY(-1deg);
+  }
+
   &.active:not(.flipped):hover {
     transform: rotateY(-20deg);
   }

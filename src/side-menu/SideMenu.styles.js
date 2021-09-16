@@ -4,14 +4,16 @@ const styles = ({ theme }) => css`
   display: flex;
   height: 100%;
 
-  .vertical-curve,
-  .horizontal-curve {
+  .vertical-curve {
     height: 100%;
     width: 100px;
     object-fit: cover;
   }
 
   .horizontal-curve {
+    height: 100px;
+    width: 100%;
+    object-fit: cover;
     display: none;
   }
 
@@ -77,22 +79,15 @@ const styles = ({ theme }) => css`
   @media only screen and (orientation: portrait) {
     flex-direction: column;
 
-    .curve {
+    .vertical-curve {
       display: none;
     }
-    .landscape-curve {
+    .horizontal-curve {
       display: block;
     }
 
     .area {
-      display: flex;
       flex-direction: row;
-      justify-content: space-evenly;
-
-      .panel:nth-child(1) {
-        margin-bottom: 0;
-        margin-right: 40px;
-      }
     }
   }
 

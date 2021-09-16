@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Spellbook.styles";
 import { styled } from "../styled";
 import classNames from "classnames";
-import { prettyReaction, range } from "../utils";
+import { range } from "../utils";
 import Page from "./page/Page";
 import { reactions as defaultReactions } from "../reactions";
 import { maxPages } from "./Spellbook.utils";

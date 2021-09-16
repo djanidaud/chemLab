@@ -89,6 +89,12 @@ function SideMenu({
             <img src="/images/search.svg" alt="" className="search" />
           </div>
         </div>
+        {/*<CraftingArea*/}
+        {/*  className="craftingArea"*/}
+        {/*  currentReaction={currentReaction}*/}
+        {/*  onStart={null}*/}
+        {/*  onReset={null}*/}
+        {/*/>*/}
         <StorageArea
           className="panel"
           onCompoundClick={onCompoundClick}
