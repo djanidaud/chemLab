@@ -9,7 +9,7 @@ function Compound({ className, symbol, onClick, active, disabled, color }) {
   return (
     <div
       className={classNames([className, { active, disabled }])}
-      onClick={() => onClick(symbol)}
+      onClick={() => (disabled ? null : onClick(symbol))}
     >
       <PotionOne className="potion" color={color} />
       <div className="overlay">

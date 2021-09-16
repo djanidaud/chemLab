@@ -50,6 +50,7 @@ const styles = ({ theme }) => css`
     color: transparent;
     text-shadow: none;
     background-image: none;
+    cursor: default;
   }
 
   @keyframes new-item-animation {
