@@ -3,7 +3,6 @@ import styles from "./Main.styles";
 import { styled } from "../styled";
 import PeriodicTable from "../periodic-table/PeriodicTable";
 import Navbar from "../navbar/Navbar";
-import CraftingArea from "../crafting-area/CraftingArea";
 import { reactions } from "../reactions";
 import { areArraysEqual, getActors } from "../utils";
 import SideMenu from "../side-menu/SideMenu";
@@ -49,10 +48,6 @@ function Main({ className }) {
         currentReaction={currentReaction}
         onCompoundClick={onElementClick}
         possibleReactionActors={possibleReactionActors}
-      />
-      <CraftingArea
-        className="craftingArea"
-        currentReaction={currentReaction}
         onStart={onStart}
         onReset={() => setCurrentReaction([])}
       />

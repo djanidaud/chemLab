@@ -12,7 +12,7 @@ const styles = ({ theme }) => css`
   grid-template-areas:
     "menu sideMenu"
     "table sideMenu"
-    "craftingArea sideMenu";
+    ". sideMenu";
 
   height: 100%;
   background-color: #001122;
@@ -24,10 +24,6 @@ const styles = ({ theme }) => css`
     grid-area: table;
     justify-self: center;
     align-self: center;
-  }
-
-  .craftingArea {
-    grid-area: craftingArea;
   }
 
   .sideMenu {

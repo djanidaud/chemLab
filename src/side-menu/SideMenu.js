@@ -5,6 +5,7 @@ import Spellbook from "../spellbook/Spellbook";
 import { reactions } from "../reactions";
 import useCallbackDebounced from "../hooks/useCallbackDebounced";
 import StorageArea from "../storage-area/StorageArea";
+import CraftingArea from "../crafting-area/CraftingArea";
 
 function SideMenu({
   className,
@@ -12,6 +13,8 @@ function SideMenu({
   onCompoundClick,
   currentReaction,
   possibleReactionActors,
+  onStart,
+  onReset,
 }) {
   const [bookState, setBookState] = useState({
     bookReactions: reactions,
@@ -89,6 +92,12 @@ function SideMenu({
             <img src="/images/search.svg" alt="" className="search" />
           </div>
         </div>
+        <CraftingArea
+          className="panel"
+          currentReaction={currentReaction}
+          onStart={onStart}
+          onReset={onReset}
+        />
         <StorageArea
           className="panel"
           onCompoundClick={onCompoundClick}

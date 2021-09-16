@@ -1,15 +1,8 @@
 import React from "react";
-import { styled } from "../../styled";
-import styles from "./StartIcon.styles";
 
-function StartIcon({ className }) {
+function StartIcon() {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 163.861 163.861"
-      width="30px"
-      height="30px"
-    >
+    <svg viewBox="0 0 163.861 163.861" width="30px" height="30px">
       <path
         d="M34.857,3.613C20.084-4.861,8.107,2.081,8.107,19.106v125.637c0,17.042,11.977,23.975,26.75,15.509L144.67,97.275
 		c14.778-8.477,14.778-22.211,0-30.686L34.857,3.613z"
@@ -18,4 +11,4 @@ function StartIcon({ className }) {
   );
 }
 
-export default styled(StartIcon)(styles);
+export default StartIcon;
