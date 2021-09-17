@@ -93,12 +93,26 @@ const styles = ({ theme, pageNumber }) => css`
     font-weight: 600;
     text-align: center;
     transition: border-bottom 0.5s;
+    overflow: visible;
+    max-width: 100%;
 
     .plus,
     .arrow-down {
       padding: 0 2px;
       font-size: ${theme.fontSize.small1};
       font-weight: 100;
+    }
+
+    .coef {
+      font-weight: 400;
+      opacity: 0.9;
+      padding-right: 1px;
+      font-size: ${theme.fontSize.small1};
+    }
+
+    &.matched .pretty-compound {
+      color: green;
+      font-size: 14px;
     }
   }
 

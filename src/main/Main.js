@@ -14,7 +14,7 @@ function Main({ className }) {
 
   const getResult = () =>
     reactions.reduce(
-      (acc, { reacts, products, coefs }) =>
+      (acc, { reacts, products }) =>
         areArraysEqual(reacts, currentReaction) ? [...acc, ...products] : acc,
       []
     );

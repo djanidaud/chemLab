@@ -5,6 +5,7 @@ import Carousel from "../carousel/Carousel";
 import Compound from "./compound/Compound";
 import { compoundsData } from "../reactions";
 import theme from "../theme";
+import { chunks } from "../utils";
 
 function StorageArea({
   className,
@@ -19,24 +20,19 @@ function StorageArea({
     () =>
       setSlides(
         compounds
-          .reduce((acc, el, i) => {
-            const compound = (
-              <Compound
-                key={"compound-" + i}
-                active={currentReaction.includes(el)}
-                symbol={el}
-                onClick={onCompoundClick}
-                color={theme.elementsColor[compoundsData.get(el).type].hover}
-                disabled={
-                  currentReaction.length !== 0 &&
-                  !possibleReactionActors.has(el)
-                }
-              />
-            );
-            if (i % 9 === 0) acc.push([compound]);
-            else acc[acc.length - 1].push(compound);
-            return acc;
-          }, [])
+          .map((el, i) => (
+            <Compound
+              key={"compound-" + i}
+              active={currentReaction.includes(el)}
+              symbol={el}
+              onClick={onCompoundClick}
+              color={theme.elementsColor[compoundsData.get(el).type].hover}
+              disabled={
+                currentReaction.length !== 0 && !possibleReactionActors.has(el)
+              }
+            />
+          ))
+          .reduce(chunks(9), [])
           .map((e, i) => (
             <div className="potion-section" key={"potion-section-" + i}>
               {e}

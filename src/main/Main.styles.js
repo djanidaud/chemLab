@@ -6,7 +6,7 @@ const styles = ({ theme }) => css`
   gap: 15px 30px;
   display: grid;
   grid-template:
-    min-content 1fr minmax(min-content, 100px)
+    min-content 1fr 100px
     / 1fr min-content;
 
   grid-template-areas:
@@ -22,8 +22,6 @@ const styles = ({ theme }) => css`
 
   .table {
     grid-area: table;
-    justify-self: center;
-    align-self: center;
   }
 
   .sideMenu {
@@ -44,7 +42,7 @@ const styles = ({ theme }) => css`
     }
 
     grid-template:
-      min-content 1fr minmax(min-content, 100px) min-content
+      min-content 1fr min-content
       / 1fr;
     grid-template-areas:
       "menu"

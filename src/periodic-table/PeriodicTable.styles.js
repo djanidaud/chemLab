@@ -14,7 +14,7 @@ const styles = ({ theme }) => css`
   align-self: center;
   box-sizing: border-box;
 
-  .table {
+  .main-elements {
     width: 100%;
     display: grid;
     grid-template-columns: 0.4fr repeat(18, 1fr);

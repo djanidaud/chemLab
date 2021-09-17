@@ -6,6 +6,7 @@ import { reactions } from "../reactions";
 import useCallbackDebounced from "../hooks/useCallbackDebounced";
 import StorageArea from "../storage-area/StorageArea";
 import CraftingArea from "../crafting-area/CraftingArea";
+import { areArraysEqual } from "../utils";
 
 function SideMenu({
   className,
@@ -47,11 +48,16 @@ function SideMenu({
   };
 
   const filerReactions = (query) =>
-    reactions.filter(
-      ({ products, reacts }) =>
-        matchesFormula(reacts, query[0]) &&
-        (query.length === 1 || matchesFormula(products, query[1]))
-    );
+    reactions
+      .filter(
+        ({ reacts, products }) =>
+          matchesFormula(reacts, query[0]) &&
+          (query.length === 1 || matchesFormula(products, query[1]))
+      )
+      .map((reaction) => ({
+        ...reaction,
+        matched: areArraysEqual(reaction.reacts, currentReaction),
+      }));
 
   const onChange = useCallbackDebounced(
     (data) => {

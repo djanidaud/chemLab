@@ -50,7 +50,7 @@ function PeriodicTable({
 
   return (
     <div className={className}>
-      <div className="table">{TableLayout.map(layoutMapper)}</div>
+      <div className="main-elements">{TableLayout.map(layoutMapper)}</div>
       <div className="extraElements">
         {renderExtraElements(57)}
         {renderExtraElements(89)}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./Page.styles";
 import { styled } from "../../styled";
 import classNames from "classnames";
-import { prettyReaction } from "../../utils";
+import { prettyFormula } from "../../utils";
 
 function Page({
   className,
@@ -18,11 +18,12 @@ function Page({
     setTimeout(() => setDisabled(false), 600);
   };
 
-  const displaySide = ({ reacts, products }, index) => (
-    <div className="reaction" key={`reaction-${pageNumber}-${index}`}>
-      {prettyReaction(reacts)}
-      <div className="arrow-down">↓</div>
-      {prettyReaction(products)}
+  const displayReaction = (formula, index) => (
+    <div
+      className={classNames("reaction", { matched: formula.matched })}
+      key={`reaction-${pageNumber}-${index}`}
+    >
+      {prettyFormula(formula)}
     </div>
   );
 
@@ -32,9 +33,11 @@ function Page({
       onClick={disabled ? null : onFlip}
     >
       <div className="page-front">
-        {frontPage && frontPage.map(displaySide)}
+        {frontPage && frontPage.map(displayReaction)}
       </div>
-      <div className="page-back">{backPage && backPage.map(displaySide)}</div>
+      <div className="page-back">
+        {backPage && backPage.map(displayReaction)}
+      </div>
     </div>
   );
 }

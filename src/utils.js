@@ -11,21 +11,29 @@ export const prettyCompound = (name, j) =>
     c >= "0" && c <= "9" ? <sub key={`char-${j}-${index}`}>{c}</sub> : c
   );
 
-export const prettyReaction = (reaction) =>
-  reaction.reduce(
-    (acc, val, index) =>
-      acc.concat([
-        index === 0 ? (
-          ""
-        ) : (
-          <span className="plus" key={"plus-" + index}>
-            +
-          </span>
-        ),
-        ...prettyCompound(val, index),
-      ]),
-    []
+export const prettyReaction = (reaction, coefsMap = null) =>
+  reaction.map((val, index) => {
+    const coef = coefsMap ? coefsMap.get(val) : "1";
+
+    return (
+      <React.Fragment key={"prettyReaction-" + index}>
+        {index !== 0 && <span className="plus">+</span>}
+        {coefsMap && coef !== "1" && <span className="coef">{coef}</span>}
+        <span className="pretty-compound">{prettyCompound(val, index)} </span>
+      </React.Fragment>
+    );
+  });
+
+export const prettyFormula = ({ reacts, products, coefs }) => {
+  const coefsMap = new Map(coefs.reduce(chunks(2), []));
+  return (
+    <>
+      {prettyReaction(reacts, coefsMap)}
+      <div className="arrow-down">↓</div>
+      {prettyReaction(products, coefsMap)}
+    </>
   );
+};
 
 export const includesAll = (arr, subArr) =>
   subArr.every((val) => arr.includes(val));
@@ -46,3 +54,9 @@ export const getActors = (currentReaction) =>
   ]);
 
 export const range = (length) => Array.from(Array(length).keys());
+
+export const chunks = (number) => (acc, val, index) => {
+  if (index % number === 0) acc.push([val]);
+  else acc[acc.length - 1].push(val);
+  return acc;
+};
