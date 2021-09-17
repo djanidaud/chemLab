@@ -8,6 +8,10 @@ const styles = ({ theme }) => {
       &:hover:not(.disabled) {
         background-color: ${theme.elementsColor[group].hover};
       }
+      
+      &.disabled {
+        background-color: ${theme.elementsColor[group].disabled};
+      }
     }
    `;
 
@@ -61,8 +65,8 @@ const styles = ({ theme }) => {
       background-color: #ee016b !important;
       border-radius: 6px;
       box-shadow: inset 0 2px 2px hsla(334, 100%, 13%, 0.6), 0 3px 0 #ff3c91;
-      transform: translateY(2px);
-      padding-bottom: calc(100% - 3.5px);
+      transform: translateY(4px);
+      padding-bottom: calc(100% - 5.5px);
     }
 
     &:hover:not(:active, .active, .disabled) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./CraftingArea.styles";
 import { styled } from "../styled";
 import { areArraysEqual, prettyReaction } from "../utils";
@@ -20,7 +20,6 @@ function CraftingArea({ className, currentReaction, onStart, onReset }) {
   return currentReaction.length !== 0 ? (
     <div className={className}>
       <div className="equation-area">{prettyReaction(currentReaction)}</div>
-
       {currentReaction.length !== 0 && (
         <div className="actions">
           <button

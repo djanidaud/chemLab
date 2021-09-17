@@ -10,6 +10,17 @@ const styles = ({ theme }) => css`
   font-family: ${theme.fontFamily.chemical};
   padding: 15px 0;
   height: fit-content !important;
+  animation: slideIn 0.5s ease-in;
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
 
   @keyframes shake {
     5%,
@@ -32,10 +43,9 @@ const styles = ({ theme }) => css`
     }
   }
 
-  .equation-area {
-    .plus {
-      padding: 0 12px;
-    }
+  .equation-area .plus {
+    padding: 0 6px;
+    font-weight: 300;
   }
 
   .actions {
@@ -69,10 +79,6 @@ const styles = ({ theme }) => css`
       background-color: transparent;
       cursor: pointer;
       transition: transform 0.5s;
-
-      //&:active {
-      //  transform: rotate(-90deg);
-      //}
     }
   }
 `;
