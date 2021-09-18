@@ -6,6 +6,7 @@ import Navbar from "../navbar/Navbar";
 import { reactions } from "../reactions";
 import { areArraysEqual, getActors } from "../utils";
 import SideMenu from "../side-menu/SideMenu";
+import molecularParser from "molecular-parser";
 
 function Main({ className }) {
   const [currentReaction, setCurrentReaction] = useState([]);
