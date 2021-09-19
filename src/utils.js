@@ -110,51 +110,111 @@ const reaction1 = {
 };
 const reaction2 = { reacts: ["Na", "H2O"], products: ["NaOH", "H2"] };
 
-console.log(balance(reaction1));
+//console.log(balance(reaction1));
 
-const parse = (compound, context = 1) => {
-  // Fe2(OH)3 -> Fe2O3H3
-  let leftB = compound.indexOf("(");
-  let rightB = compound.indexOf(")");
-  let arr = [];
+const parseMol = (compound) => {
+  const atomsMap = new Map();
+  const stack = [];
 
-  while (leftB !== -1 && rightB !== -1) {
-    const scalar = takeDigits(compound, rightB + 1);
-    console.log(scalar);
-    compound.splice(rightB, 1 + scalar.length);
-    compound.splice(leftB, 1);
+  const incEntry = (key, count = 1) =>
+    atomsMap.set(key, (atomsMap.get(key) || 0) + count);
 
-    const slised = compound.splice(leftB, rightB - leftB - 1);
+  const processElement = (element, scale = 1) => {
+    let lastAddedAtom = "";
+    element = parseElement(element);
 
-    if (scalar !== "")
-      parse(slised, context * parseInt(scalar)).forEach((e) => {
-        arr.push(e);
-      });
+    element.forEach((atom, i) => {
+      if (isNumber(atom)) {
+        incEntry(lastAddedAtom, parseInt(atom) * scale - 1);
+      } else {
+        lastAddedAtom = atom;
+        incEntry(
+          atom,
+          element.length === i + 1 || !isNumber(element[i + 1]) ? scale : 1
+        );
+      }
+    });
+  };
 
-    leftB = compound.indexOf("(");
-    rightB = compound.indexOf(")");
+  const backToStack = (affected, scale) => {
+    affected.forEach((element) => {
+      element = parseElement(element);
+
+      stack.push(
+        element.reduce((acc, atom, i) => {
+          if (isNumber(atom)) {
+            return acc + parseInt(atom) * scale;
+          }
+
+          return (
+            acc +
+            atom +
+            (element.length === i + 1 || !isNumber(element[i + 1]) ? scale : "")
+          );
+        })
+      );
+    });
+  };
+
+  const processBrackets = (context) => {
+    let affected = [];
+    let scale = parseInt(context);
+
+    stack.pop();
+    let lastPopped;
+
+    let deepness = 0;
+    while ((lastPopped = stack.pop()) !== "(" || deepness !== 0) {
+      if (lastPopped === ")") deepness++;
+      if (lastPopped === "(") deepness--;
+      affected.push(lastPopped);
+    }
+
+    if (stack.length === 0) affected.forEach((el) => processElement(el, scale));
+    else backToStack(affected, scale);
+  };
+
+  compound.match(/[A-Z][a-z]*\d*|[()]|\d+/g).forEach((comp) => {
+    if (comp === "(" || comp === ")") {
+      stack.push(comp);
+      return;
+    }
+
+    if (isNumber(comp)) {
+      processBrackets(comp);
+      return;
+    }
+
+    if (stack.length === 0) {
+      processElement(comp);
+      return;
+    }
+
+    if (stack[stack.length - 1] === ")") {
+      processBrackets("1");
+    }
+
+    stack.push(comp);
+  });
+
+  while (stack[stack.length - 1] === ")") {
+    processBrackets("1");
   }
-  const c = [];
 
-  compound
-    .join("")
-    .match(/[A-Z][a-z]*\d*/g)
-    .forEach((el) => c.push(el + "*" + context));
-
-  return [...c, ...arr];
+  return atomsMap;
 };
 
-const takeDigits = (text, index) => {
-  let digits = "";
+const parseElement = (element) => element.match(/[A-Z][a-z]*|\d+/g) || [];
+const isNumber = (str) => !isNaN(str);
+const testParser = (comp) => console.log(comp, parseMol(comp));
 
-  while (index < text.length && "0" <= text[index] && text[index] <= "9") {
-    digits += text[index];
-    index++;
-  }
-  return digits;
-};
-const eq = Array.from("A2B(C2)23");
-console.log("A2B(C2)23");
-console.log(parse(eq).join("-"));
-
-//console.log("H2O(Add)HJH(A2)222".replace(/\([\S]*\)\d*/g, ""));
+testParser("H2O");
+testParser("Fe2OH3");
+testParser("AlC3H8C3H8OAl");
+testParser("Na(OH)2");
+testParser("Na(OH2)2");
+testParser("H22(O2)");
+testParser("H22((O2)4)25");
+testParser("H2((O2)2(Ca2)2)2");
+testParser("H2((O2))");
+testParser("H2(H2(O2)2)2");
