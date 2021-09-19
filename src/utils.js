@@ -74,7 +74,7 @@ const balance = ({ reacts, products }) => {
   const greatestMultiplier = coefs.reduce((acc, a) => gcd(acc, a));
 
   return new Map(
-    coefs.map((coef, i) => [compounds[i], coef / greatestMultiplier])
+    coefs.map((coef, i) => [compounds[i], Math.abs(coef) / greatestMultiplier])
   );
 };
 
@@ -93,7 +93,10 @@ const getReactionMatrix = (compounds, numberOfReacts) => {
 };
 
 const countAtoms = (actor) => (compound) =>
-  molecularParser.parse(compound)[actor] || 0;
+  parseCompound(compound).get(actor) || 0;
+
+// const countAtoms = (actor) => (compound) =>
+//   molecularParser.parse(compound)[actor] || 0;
 
 const getReactionAtoms = (allElements) => {
   const atoms = new Set();
@@ -103,56 +106,18 @@ const getReactionAtoms = (allElements) => {
   return Array.from(atoms);
 };
 
-const reaction = { reacts: ["H2", "O2"], products: ["H2O"] };
-const reaction1 = {
-  reacts: ["Al", "KOH", "H2O"],
-  products: ["K3AlO6H6", "H2"],
-};
-const reaction2 = { reacts: ["Na", "H2O"], products: ["NaOH", "H2"] };
-
-//console.log(balance(reaction1));
-
-const parseMol = (compound) => {
-  const atomsMap = new Map();
-  const stack = [];
-
-  const incEntry = (key, count = 1) =>
-    atomsMap.set(key, (atomsMap.get(key) || 0) + count);
-
-  const processElement = (element, scale = 1) => {
-    element = parseElement(element);
-
-    element.forEach((atom, i) =>
-      isNaN(atom)
-        ? incEntry(atom, isNaN(element[i + 1]) ? scale : 1)
-        : incEntry(element[i - 1], parseInt(atom) * scale - 1)
-    );
+const parseCompound = (compound) => {
+  const parserState = {
+    atomsMap: new Map(),
+    stack: [],
   };
+  const { atomsMap, stack } = parserState;
 
-  const processBrackets = (context) => {
-    let affected = [];
-    let scale = parseInt(context);
-    let lastPopped;
-    let deepness = 0;
-    stack.pop();
-
-    while ((lastPopped = stack.pop()) !== "(" || deepness !== 0) {
-      if (lastPopped === ")") deepness++;
-      if (lastPopped === "(") deepness--;
-      affected.push(lastPopped);
-    }
-
-    if (stack.length === 0) affected.forEach((el) => processElement(el, scale));
-    else scaleBracketedElements(affected, scale).forEach((e) => stack.push(e));
-  };
-
-  compound.match(/[A-Z][a-z]*\d*|[()]|\d+/g).forEach((comp) => {
+  formatCompound(compound).forEach((comp) => {
     if (!isNaN(comp)) {
-      processBrackets(comp);
+      processBrackets(comp, parserState);
       return;
     }
-
-    if (stack[stack.length - 1] === ")") processBrackets("1");
 
     if (comp === "(" || comp === ")") {
       stack.push(comp);
@@ -160,32 +125,54 @@ const parseMol = (compound) => {
     }
 
     if (stack.length === 0) {
-      processElement(comp);
+      processElement(comp, atomsMap);
       return;
     }
 
     stack.push(comp);
   });
 
-  while (stack[stack.length - 1] === ")") processBrackets("1");
-
   return atomsMap;
+};
+
+const processElement = (element, atomsMap, scale = 1) => {
+  const atoms = parseAtoms(element);
+  const incAtom = (key, count = 0) =>
+    atomsMap.set(key, (atomsMap.get(key) || 0) + count);
+
+  atoms.forEach((atom, i) =>
+    isNaN(atom) ? incAtom(atom) : incAtom(atoms[i - 1], parseInt(atom) * scale)
+  );
+};
+
+const processBrackets = (context, { atomsMap, stack }) => {
+  let scale = parseInt(context);
+  let affected = [];
+  let lastPopped;
+  let deepness = 0;
+  stack.pop();
+
+  while ((lastPopped = stack.pop()) !== "(" || deepness !== 0) {
+    if (lastPopped === ")") deepness++;
+    if (lastPopped === "(") deepness--;
+    affected.push(lastPopped);
+  }
+
+  if (stack.length === 0)
+    affected.forEach((el) => processElement(el, atomsMap, scale));
+  else scaleBracketedElements(affected, scale).forEach((e) => stack.push(e));
 };
 
 const scaleBracketedElements = (affected, scale) =>
   affected
-    .map(parseElement)
-    .map((element) =>
-      element
-        .map((atom, i) =>
-          isNaN(atom)
-            ? atom + (isNaN(element[i + 1]) ? scale : "")
-            : parseInt(atom) * scale
-        )
+    .map(parseAtoms)
+    .map((atoms) =>
+      atoms
+        .map((atom) => (isNaN(atom) ? atom : parseInt(atom) * scale))
         .join("")
     );
 
-const parseElement = (element) => element.match(/[A-Z][a-z]*|\d+/g) || [];
+const parseAtoms = (element) => element.match(/[A-Z][a-z]*|\d+/g) || [];
 
 const formatCompound = (compound) => {
   const tokens = compound.match(/[A-Z][a-z]*\d*|[()]|\d+/g);
@@ -207,7 +194,16 @@ const formatCompound = (compound) => {
   }, []);
 };
 
-const testParser = (comp) => console.log(comp, parseMol(comp));
+const reaction = { reacts: ["H2", "O2"], products: ["H2O"] };
+const reaction1 = {
+  reacts: ["Al", "KOH", "H2O"],
+  products: ["K3(Al(OH)6)", "H2"],
+};
+const reaction2 = { reacts: ["Na", "H2O"], products: ["NaOH", "H2"] };
+
+console.log(balance(reaction1));
+
+const testParser = (comp) => console.log(comp, parseCompound(comp));
 
 testParser("H2O");
 testParser("Fe2OH3");
