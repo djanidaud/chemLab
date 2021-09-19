@@ -120,50 +120,22 @@ const parseMol = (compound) => {
     atomsMap.set(key, (atomsMap.get(key) || 0) + count);
 
   const processElement = (element, scale = 1) => {
-    let lastAddedAtom = "";
     element = parseElement(element);
 
-    element.forEach((atom, i) => {
-      if (isNumber(atom)) {
-        incEntry(lastAddedAtom, parseInt(atom) * scale - 1);
-      } else {
-        lastAddedAtom = atom;
-        incEntry(
-          atom,
-          element.length === i + 1 || !isNumber(element[i + 1]) ? scale : 1
-        );
-      }
-    });
-  };
-
-  const backToStack = (affected, scale) => {
-    affected.forEach((element) => {
-      element = parseElement(element);
-
-      stack.push(
-        element.reduce((acc, atom, i) => {
-          if (isNumber(atom)) {
-            return acc + parseInt(atom) * scale;
-          }
-
-          return (
-            acc +
-            atom +
-            (element.length === i + 1 || !isNumber(element[i + 1]) ? scale : "")
-          );
-        })
-      );
-    });
+    element.forEach((atom, i) =>
+      isNaN(atom)
+        ? incEntry(atom, isNaN(element[i + 1]) ? scale : 1)
+        : incEntry(element[i - 1], parseInt(atom) * scale - 1)
+    );
   };
 
   const processBrackets = (context) => {
     let affected = [];
     let scale = parseInt(context);
-
-    stack.pop();
     let lastPopped;
-
     let deepness = 0;
+    stack.pop();
+
     while ((lastPopped = stack.pop()) !== "(" || deepness !== 0) {
       if (lastPopped === ")") deepness++;
       if (lastPopped === "(") deepness--;
@@ -171,17 +143,19 @@ const parseMol = (compound) => {
     }
 
     if (stack.length === 0) affected.forEach((el) => processElement(el, scale));
-    else backToStack(affected, scale);
+    else scaleBracketedElements(affected, scale).forEach((e) => stack.push(e));
   };
 
   compound.match(/[A-Z][a-z]*\d*|[()]|\d+/g).forEach((comp) => {
-    if (comp === "(" || comp === ")") {
-      stack.push(comp);
+    if (!isNaN(comp)) {
+      processBrackets(comp);
       return;
     }
 
-    if (isNumber(comp)) {
-      processBrackets(comp);
+    if (stack[stack.length - 1] === ")") processBrackets("1");
+
+    if (comp === "(" || comp === ")") {
+      stack.push(comp);
       return;
     }
 
@@ -190,22 +164,49 @@ const parseMol = (compound) => {
       return;
     }
 
-    if (stack[stack.length - 1] === ")") {
-      processBrackets("1");
-    }
-
     stack.push(comp);
   });
 
-  while (stack[stack.length - 1] === ")") {
-    processBrackets("1");
-  }
+  while (stack[stack.length - 1] === ")") processBrackets("1");
 
   return atomsMap;
 };
 
+const scaleBracketedElements = (affected, scale) =>
+  affected
+    .map(parseElement)
+    .map((element) =>
+      element
+        .map((atom, i) =>
+          isNaN(atom)
+            ? atom + (isNaN(element[i + 1]) ? scale : "")
+            : parseInt(atom) * scale
+        )
+        .join("")
+    );
+
 const parseElement = (element) => element.match(/[A-Z][a-z]*|\d+/g) || [];
-const isNumber = (str) => !isNaN(str);
+
+const formatCompound = (compound) => {
+  const tokens = compound.match(/[A-Z][a-z]*\d*|[()]|\d+/g);
+
+  return tokens.reduce((acc, comp, i) => {
+    acc.push(comp);
+
+    if (!isNaN(comp) || comp === "(") return acc;
+
+    if (comp === ")") {
+      if (isNaN(tokens[i + 1])) acc.push("1");
+      return acc;
+    }
+
+    if ((comp.match(/\d+/g) || []).length === 0)
+      acc[acc.length - 1] = comp + "1";
+
+    return acc;
+  }, []);
+};
+
 const testParser = (comp) => console.log(comp, parseMol(comp));
 
 testParser("H2O");
@@ -218,3 +219,4 @@ testParser("H22((O2)4)25");
 testParser("H2((O2)2(Ca2)2)2");
 testParser("H2((O2))");
 testParser("H2(H2(O2)2)2");
+testParser("H(O)(O)2");
