@@ -6,7 +6,6 @@ import Navbar from "../navbar/Navbar";
 import { reactions } from "../reactions";
 import { areArraysEqual, getActors } from "../utils";
 import SideMenu from "../side-menu/SideMenu";
-import molecularParser from "molecular-parser";
 
 function Main({ className }) {
   const [currentReaction, setCurrentReaction] = useState([]);
@@ -15,8 +14,10 @@ function Main({ className }) {
 
   const getResult = () =>
     reactions.reduce(
-      (acc, { reacts, products }) =>
-        areArraysEqual(reacts, currentReaction) ? [...acc, ...products] : acc,
+      (acc, { reactants, products }) =>
+        areArraysEqual(reactants, currentReaction)
+          ? [...acc, ...products]
+          : acc,
       []
     );
 

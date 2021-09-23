@@ -14,8 +14,8 @@ function CraftingArea({ className, currentReaction, onStart, onReset }) {
     () =>
       setDisabled(
         currentReaction.length === 0 ||
-          !reactions.some(({ reacts }) =>
-            areArraysEqual(reacts, currentReaction)
+          !reactions.some(({ reactants }) =>
+            areArraysEqual(reactants, currentReaction)
           )
       ),
     [currentReaction]

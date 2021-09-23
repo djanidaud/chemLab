@@ -22,6 +22,8 @@ const styles = ({ theme }) => css`
 
   .table {
     grid-area: table;
+    align-self: center;
+    justify-self: center;
   }
 
   .sideMenu {

@@ -50,13 +50,13 @@ function SideMenu({
   const filerReactions = (query) =>
     reactions
       .filter(
-        ({ reacts, products }) =>
-          matchesFormula(reacts, query[0]) &&
+        ({ reactants, products }) =>
+          matchesFormula(reactants, query[0]) &&
           (query.length === 1 || matchesFormula(products, query[1]))
       )
       .map((reaction) => ({
         ...reaction,
-        matched: areArraysEqual(reaction.reacts, currentReaction),
+        matched: areArraysEqual(reaction.reactants, currentReaction),
       }));
 
   const onChange = useCallbackDebounced(
