@@ -1,5 +1,6 @@
 import React from "react";
 import { reactions } from "./reactions";
+import balance from "reaction-balancer";
 const elementsWithTwoAtoms = ["H", "N", "O", "F", "Cl", "Br", "I", "At"];
 
 export const applyCorrectNumberOfAtoms = (element) =>
@@ -12,24 +13,24 @@ export const prettyCompound = (name, j) =>
 
 export const prettyReaction = (reaction, coefsMap = null) =>
   reaction.map((val, index) => {
-    const coef = coefsMap ? coefsMap.get(val) : 1;
+    const coeff = coefsMap ? coefsMap.get(val) : 1;
 
     return (
       <React.Fragment key={"prettyReaction-" + index}>
         {index !== 0 && <span className="plus">+</span>}
-        {coefsMap && coef !== 1 && <span className="coef">{coef}</span>}
+        {coefsMap && coeff !== 1 && <span className="coef">{coeff}</span>}
         <span className="pretty-compound">{prettyCompound(val, index)} </span>
       </React.Fragment>
     );
   });
 
-export const prettyFormula = ({ reactants, products, coeffs }) => {
-  const coeffsMap = new Map(coeffs);
+export const prettyFormula = (reaction) => {
+  const coeffsMap = balance(reaction);
   return (
     <>
-      {prettyReaction(reactants, coeffsMap)}
+      {prettyReaction(reaction.reactants, coeffsMap)}
       <div className="arrow-down">↓</div>
-      {prettyReaction(products, coeffsMap)}
+      {prettyReaction(reaction.products, coeffsMap)}
     </>
   );
 };
