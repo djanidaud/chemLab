@@ -1,6 +1,5 @@
 import React from "react";
-import { r, reactions } from "./reactions";
-import balance from "reaction-balancer";
+import { reactions } from "./reactions";
 const elementsWithTwoAtoms = ["H", "N", "O", "F", "Cl", "Br", "I", "At"];
 
 export const applyCorrectNumberOfAtoms = (element) =>
