@@ -16,6 +16,7 @@ function SideMenu({
   possibleReactionActors,
   onStart,
   onReset,
+  onCompoundDelete,
 }) {
   const [bookState, setBookState] = useState({
     bookReactions: reactions,
@@ -110,6 +111,7 @@ function SideMenu({
           compounds={compounds}
           currentReaction={currentReaction}
           possibleReactionActors={possibleReactionActors}
+          onCompoundDelete={onCompoundDelete}
         />
       </div>
     </div>

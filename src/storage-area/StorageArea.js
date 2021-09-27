@@ -13,6 +13,7 @@ function StorageArea({
   onCompoundClick,
   currentReaction,
   possibleReactionActors,
+  onCompoundDelete,
 }) {
   const [slides, setSlides] = useState([]);
 
@@ -26,6 +27,7 @@ function StorageArea({
               active={currentReaction.includes(el)}
               symbol={el}
               onClick={onCompoundClick}
+              onDelete={() => onCompoundDelete(i)}
               color={theme.elementsColor[compoundsData.get(el).type].hover}
               disabled={
                 currentReaction.length !== 0 && !possibleReactionActors.has(el)
@@ -39,7 +41,7 @@ function StorageArea({
             </div>
           ))
       ),
-    [currentReaction]
+    [currentReaction, compounds]
   );
 
   return (

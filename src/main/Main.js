@@ -35,6 +35,9 @@ function Main({ className }) {
     );
   };
 
+  const onCompoundDelete = (index) =>
+    setCompounds((compounds) => compounds.filter((_, i) => i !== index));
+
   return (
     <div className={className}>
       <Navbar className="menu" />
@@ -52,6 +55,7 @@ function Main({ className }) {
         possibleReactionActors={possibleReactionActors}
         onStart={onStart}
         onReset={() => setCurrentReaction([])}
+        onCompoundDelete={onCompoundDelete}
       />
     </div>
   );

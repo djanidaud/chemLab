@@ -5,15 +5,21 @@ import classNames from "classnames";
 import { prettyCompound } from "../../utils";
 import PotionOne from "../../icons/potion-one/PotionOne";
 
-function Compound({ className, symbol, onClick, active, disabled, color }) {
+function Compound({
+  className,
+  symbol,
+  onClick,
+  active,
+  disabled,
+  color,
+  onDelete,
+}) {
   return (
-    <div
-      className={classNames([className, { active, disabled }])}
-      onClick={() => (disabled ? null : onClick(symbol))}
-    >
+    <div className={classNames([className, { active, disabled }])}>
       <PotionOne className="potion" color={color} />
       <div className="overlay">
         <div>{prettyCompound(symbol)}</div>
+        <span className="delete-btn" onClick={onDelete} />
       </div>
     </div>
   );

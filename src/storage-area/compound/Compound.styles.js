@@ -44,6 +44,10 @@ const styles = ({ theme }) => css`
   &:hover:not(.active, :active, .disabled) {
     box-shadow: ${theme.elevation.shadow2(0.5)};
     z-index: 1000;
+
+    .delete-btn {
+      visibility: visible;
+    }
   }
 
   &.disabled {
@@ -56,12 +60,44 @@ const styles = ({ theme }) => css`
   @keyframes new-item-animation {
     from {
       opacity: 0;
-      transform: scale(0.9);
+      transform: scale(0.7);
     }
 
     to {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  .delete-btn {
+    visibility: hidden;
+    position: absolute;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    color: grey;
+    top: -8px;
+    background-color: white;
+    display: flex;
+    text-shadow: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    opacity: 0.7;
+
+    &:hover {
+      background-color: #d2d2d2;
+      visibility: visible;
+    }
+
+    &::before {
+      content: "";
+      width: 60%;
+      height: 2px;
+      position: absolute;
+      background-color: grey;
+      top: calc(50% - 0.5px);
+      border-radius: 25px;
     }
   }
 `;
