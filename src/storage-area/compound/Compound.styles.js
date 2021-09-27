@@ -72,11 +72,11 @@ const styles = ({ theme }) => css`
   .delete-btn {
     visibility: hidden;
     position: absolute;
-    right: -8px;
+    right: -6px;
     width: 20px;
     height: 20px;
     color: grey;
-    top: -8px;
+    top: -6px;
     background-color: white;
     display: flex;
     text-shadow: none;
