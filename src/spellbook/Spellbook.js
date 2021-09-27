@@ -16,7 +16,17 @@ function Spellbook({ className, reactions, searching }) {
   const [pages, setPages] = useState([]);
 
   useEffect(
-    () => setCurrentPage(() => initPage),
+    () =>
+      setCurrentPage(() => {
+        const possible = reactions.reduce(
+          (acc, r, i) => (r.matched ? [...acc, i] : acc),
+          []
+        );
+        if (possible.length === 0) return initPage;
+
+        const first = possible[0];
+        return first === 0 ? 0 : Math.ceil((first - 1) / 4);
+      }),
     [initPage, allPages, reactions]
   );
 
@@ -29,12 +39,6 @@ function Spellbook({ className, reactions, searching }) {
       ),
     [currentPage]
   );
-
-  const fetchPageReactions = (page) =>
-    range(2)
-      .map((i) => 2 * page + i)
-      .filter((reactionId) => reactionId < reactions.length)
-      .map((reactionId) => reactions[reactionId]);
 
   const createPage = (index) => {
     const flipped = currentPage > index;
@@ -57,6 +61,12 @@ function Spellbook({ className, reactions, searching }) {
       />
     );
   };
+
+  const fetchPageReactions = (page) =>
+    range(2)
+      .map((i) => 2 * page + i)
+      .filter((reactionId) => reactionId < reactions.length)
+      .map((reactionId) => reactions[reactionId]);
 
   return (
     <div className={classNames([className, { searching, hidden }])}>
