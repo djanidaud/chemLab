@@ -3,9 +3,10 @@ import { css } from "styled-components";
 const styles = ({ theme }) => css`
   display: flex;
   height: 100%;
+  overflow: hidden;
 
   .vertical-curve {
-    height: 100%;
+    height: 101%;
     width: 100px;
     object-fit: cover;
   }

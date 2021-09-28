@@ -40,23 +40,27 @@ function Main({ className }) {
 
   return (
     <div className={className}>
-      <Navbar className="menu" />
-      <PeriodicTable
-        className="table"
-        onElementClick={onElementClick}
-        currentReaction={currentReaction}
-        possibleReactionActors={possibleReactionActors}
-      />
-      <SideMenu
-        className="sideMenu"
-        compounds={compounds}
-        currentReaction={currentReaction}
-        onCompoundClick={onElementClick}
-        possibleReactionActors={possibleReactionActors}
-        onStart={onStart}
-        onReset={() => setCurrentReaction([])}
-        onCompoundDelete={onCompoundDelete}
-      />
+      <div className="main">
+        <Navbar className="menu" />
+        <PeriodicTable
+          className="table"
+          onElementClick={onElementClick}
+          currentReaction={currentReaction}
+          possibleReactionActors={possibleReactionActors}
+        />
+        <SideMenu
+          className="sideMenu"
+          compounds={compounds}
+          currentReaction={currentReaction}
+          onCompoundClick={onElementClick}
+          possibleReactionActors={possibleReactionActors}
+          onStart={onStart}
+          onReset={() => setCurrentReaction([])}
+          onCompoundDelete={onCompoundDelete}
+        />
+      </div>
+      {/*<div className="purple-divider" />*/}
+      {/*<div className="help-section"></div>*/}
     </div>
   );
 }

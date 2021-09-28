@@ -17,10 +17,10 @@ function Compound({
   return (
     <div className={classNames([className, { active, disabled }])}>
       <PotionOne className="potion" color={color} />
-      <div className="overlay">
+      <div className="overlay" onClick={() => onClick(symbol)}>
         <div>{prettyCompound(symbol)}</div>
-        <span className="delete-btn" onClick={onDelete} />
       </div>
+      <span className="delete-btn" onClick={onDelete} />
     </div>
   );
 }
