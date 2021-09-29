@@ -26,7 +26,7 @@ const getClass = (groupBlock) => {
   }
 };
 
-function Element({
+const Element = ({
   className,
   symbol,
   atomicNumber,
@@ -35,21 +35,19 @@ function Element({
   active,
   disabled,
   molecule,
-}) {
-  return (
-    <div
-      className={classNames([
-        className,
-        getClass(groupBlock),
-        { active, disabled },
-        "element",
-      ])}
-      onClick={() => (disabled ? null : onClick(molecule))}
-    >
-      <div className="atomicNumber">{atomicNumber}</div>
-      <div className="symbol">{symbol}</div>
-    </div>
-  );
-}
+}) => (
+  <div
+    className={classNames([
+      className,
+      getClass(groupBlock),
+      { active, disabled },
+      "element",
+    ])}
+    onClick={() => (disabled ? null : onClick(molecule))}
+  >
+    <div className="atomicNumber">{atomicNumber}</div>
+    <div className="symbol">{symbol}</div>
+  </div>
+);
 
 export default styled(Element)(styles);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import styles from "./CraftingArea.styles";
 import { styled } from "../styled";
 import { areArraysEqual, prettyReaction } from "../utils";
@@ -6,9 +6,11 @@ import StartIcon from "../icons/start-icon/StartIcon";
 import ResetIcon from "../icons/reset-icon/ResetIcon";
 import { reactions } from "../reactions";
 import classNames from "classnames";
+import ReactionContext from "../context/reactionContext";
 
-function CraftingArea({ className, currentReaction, onStart, onReset }) {
+function CraftingArea({ className }) {
   const [disabled, setDisabled] = useState(true);
+  const { currentReaction, onStart, onReset } = useContext(ReactionContext);
 
   useEffect(
     () =>
@@ -37,8 +39,8 @@ function CraftingArea({ className, currentReaction, onStart, onReset }) {
       </div>
     </div>
   ) : (
-    ""
+    <></>
   );
 }
 
-export default styled(CraftingArea)(styles);
+export default styled(memo(CraftingArea))(styles);

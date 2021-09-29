@@ -2,19 +2,13 @@ import React from "react";
 import styles from "./Navbar.styles";
 import { styled } from "../styled";
 
-function Navbar({ className }) {
-  return (
-    <div className={className}>
-      <div className="logo">ChemLab</div>
-      <img src="https://www.svgrepo.com/show/58697/chemistry.svg" />
-      <a className="help" href="">
-        Help
-      </a>
-      <a className="about" href="">
-        About
-      </a>
-    </div>
-  );
-}
+const Navbar = ({ className }) => (
+  <div className={className}>
+    <div className="logo">ChemLab</div>
+    <img src={"/images/logo.svg"} alt="" />
+    <button className="help">Help</button>
+    <button className="about">About</button>
+  </div>
+);
 
 export default styled(Navbar)(styles);

@@ -36,13 +36,13 @@ const styles = ({ theme }) => css`
     }
   }
 
-  a {
-    text-decoration: none;
+  button {
+    background-color: transparent;
     color: ${theme.textColor.white};
     font-size: ${theme.fontSize.medium2};
     margin-right: 20px;
     margin-left: 10px;
-    border-bottom: 2px solid transparent;
+    border: 2px solid transparent;
   }
 
   .help:hover {

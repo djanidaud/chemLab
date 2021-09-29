@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./PeriodicTable.styles";
 import { styled } from "../styled";
 import {
@@ -12,13 +12,12 @@ import Element from "./element/Element";
 import TopLabel from "./top-label/TopLabel";
 import SideLabel from "./side-label/SideLabel";
 import { applyCorrectNumberOfAtoms, range } from "../utils";
+import ReactionContext from "../context/reactionContext";
 
-function PeriodicTable({
-  className,
-  onElementClick,
-  currentReaction,
-  possibleReactionActors,
-}) {
+function PeriodicTable({ className }) {
+  const { currentReaction, possibleReactionActors, onElementClick } =
+    useContext(ReactionContext);
+
   const layoutMapper = ({ type, value }, index) =>
     ({
       [TOP_LABEL]: () => <TopLabel {...value} key={type + index} />,
@@ -27,9 +26,7 @@ function PeriodicTable({
     }[type]());
 
   const renderExtraElements = (elementId) =>
-    range(14)
-      .map((i) => i + elementId)
-      .map(renderElement);
+    range(14).map((i) => renderElement(i + elementId));
 
   const renderElement = (id) => {
     const props = TableElements[id];

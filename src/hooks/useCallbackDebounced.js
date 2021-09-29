@@ -64,6 +64,7 @@ export default function useCallbackDebounced(
         }, ms);
       }
     },
-    [ms, options.leading, ...dependencies]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ms, callback, options.leading, ...dependencies]
   );
 }
