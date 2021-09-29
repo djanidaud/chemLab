@@ -14,7 +14,6 @@ function Spellbook({ className, reactions, searching }) {
   const initPage = allPages === 1 ? 0 : Math.ceil(allPages / 8);
   const [currentPage, setCurrentPage] = useState(initPage);
 
-  console.log("book render");
   useEffect(
     () =>
       setCurrentPage(() => {
