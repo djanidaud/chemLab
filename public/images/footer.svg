@@ -1,0 +1,6 @@
+<svg id="visual" viewBox="0 0 900 200" width="900" height="200" xmlns="http://www.w3.org/2000/svg"
+      version="1.1">
+    <rect x="0" y="0" width="900" height="200" fill="#001122"/>
+    <path d="M0 120L50 108.8C100 97.7 200 75.3 300 86.7C400 98 500 143 600 156.2C700 169.3 800 150.7 850 141.3L900 132L900 201L850 201C800 201 700 201 600 201C500 201 400 201 300 201C200 201 100 201 50 201L0 201Z"
+          fill="#6336ff" stroke-linecap="round"/>
+</svg>

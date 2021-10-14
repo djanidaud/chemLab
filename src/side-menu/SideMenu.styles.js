@@ -59,6 +59,9 @@ const styles = ({ theme }) => css`
   }
 
   @media only screen and ${theme.mediaQueryBreakpoints.laptop} {
+    .area {
+      padding-left: 35px;
+    }
     .vertical-curve {
       display: none;
     }

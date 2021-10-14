@@ -5,6 +5,7 @@ import PeriodicTable from "../periodic-table/PeriodicTable";
 import Navbar from "../navbar/Navbar";
 import SideMenu from "../side-menu/SideMenu";
 import { ReactionProvider } from "../context/reactionContext";
+import Footer from "../footer/Footer";
 
 const Main = ({ className }) => (
   <div className={className}>
@@ -15,7 +16,7 @@ const Main = ({ className }) => (
         <SideMenu className="sideMenu" />
       </div>
     </ReactionProvider>
-    {/*<div className="purple-divider" /> <div className="help-section"></div>*/}
+    <Footer />
   </div>
 );
 export default styled(Main)(styles);
