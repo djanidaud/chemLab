@@ -6,8 +6,8 @@ const Navbar = ({ className }) => (
   <div className={className}>
     <div className="logo">ChemLab</div>
     <img src={"/images/logo.svg"} alt="" />
-    <button className="help">Help</button>
-    <button className="about">About</button>
+    {/*<button className="help">Help</button>*/}
+    {/*<button className="about">About</button>*/}
   </div>
 );
 
